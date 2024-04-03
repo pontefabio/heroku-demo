@@ -1,3 +1,4 @@
+import os
 import numpy as np
 from flask import Flask, request, jsonify, render_template
 import pickle
@@ -26,7 +27,7 @@ def predict():
 @app.route('/predict_api',methods=['POST'])
 def predict_api():
     '''
-    For direct API calls trought request
+    For direct API calls through request
     '''
     data = request.get_json(force=True)
     prediction = model.predict([np.array(list(data.values()))])
@@ -35,7 +36,6 @@ def predict_api():
     return jsonify(output)
 
 if __name__ == "__main__":
-    app.run(debug=True)
-# Use the PORT environment variable provided by Heroku
+    # Use the PORT environment variable provided by Heroku
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, debug=True)
